@@ -140,14 +140,44 @@ func (l *linkedlist) deleteNode(target int) {
 	prev.next = loop.next
 
 }
+func (l *linkedlist) deleteOneOfMany(target int) {
+	loop := l.head
+	var prev *node
+	for loop != nil {
+		if loop.value == target && loop == l.head {
+			l.head = loop.next
+			loop = loop.next
+			l.length--
+		} else if loop.value == target && loop != l.tail {
+			prev.next = loop.next
+			loop = loop.next
+			l.length--
+		} else if loop.value == target && loop == l.tail {
+			l.tail = prev
+		} else {
+			prev = loop
+			loop = loop.next
+		}
+	}
+}
 
 func main() {
 	var mu linkedlist
 	mu.addNode(10)
-	mu.addNode(20)
-	mu.addNode(30)
-	mu.addNode(40)
-
-	mu.addBefore(5000, 20)
+	mu.addNode(10)
+	mu.addNode(10)
+	mu.addNode(10)
+	// mu.addNode(20)
+	mu.addNode(10)
+	mu.addNode(10)
+	mu.addNode(10)
+	mu.addNode(10)
+	// mu.addNode(40)
+	mu.addNode(10)
+	mu.addNode(10)
+	mu.addNode(10)
+	mu.addNode(10)
+	mu.printLinkedlist()
+	mu.deleteOneOfMany(10)
 	mu.printLinkedlist()
 }
