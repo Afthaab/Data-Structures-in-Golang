@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func SelectionSort(arr [6]int) {
 	var temp int
@@ -115,14 +117,41 @@ func mgs(arr []int, low int, high int) {
 	mgs(arr, mid+1, high)
 	mg(arr, low, mid, high)
 }
+func quickSort(arr []int, low int, high int) {
+	if low < high {
+		partition := qs(arr, low, high)
+		quickSort(arr, low, partition-1)
+		quickSort(arr, partition+1, high)
+	}
+}
+func qs(arr []int, low int, high int) int {
+	pivot := arr[low]
+	i := low
+	j := high
+	for i < j {
+		for arr[i] <= pivot && i < high {
+			i++
+		}
+		for arr[j] > pivot && j >= low {
+			j--
+		}
+		if i < j {
+			arr[i], arr[j] = arr[j], arr[i]
 
+		}
+	}
+	arr[low], arr[j] = arr[j], arr[low]
+	return j
+
+}
 func main() {
-	arr := []int{100, 8, 106, 22, 6, 8}
+	arr := []int{1000, 15, 16, 8, 5, 8, 6, 5, 45, 6, 78, 9, 7, 6, 5, 5, 4, 4, 5, 6, 7, 8, 98, 7, 7, 7, 5}
 	// SelectionSort(arr)
 	// BubbleSort(arr)
 	// InsertionSort(arr)
-	fmt.Println(arr)
-	mgs(arr, 0, len(arr)-1)
+	// mgs(arr, 0, len(arr)-1)
+	// fmt.Println(arr)
+	quickSort(arr, 0, len(arr)-1)
 	fmt.Println(arr)
 
 }
