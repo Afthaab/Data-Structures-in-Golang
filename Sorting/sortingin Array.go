@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func SelectionSort(arr [6]int) {
+func SelectionSort(arr []int) {
 	for i := 0; i < len(arr)-1; i++ { //T[o(n^2)] s[o(1)]
 		for j := i + 1; j < len(arr); j++ {
 			if arr[i] > arr[j] {
@@ -72,32 +72,33 @@ func mg(arr []int, low int, mid int, high int) {
 	temp := make([]int, high-low+1)
 	left := low
 	right := mid + 1
+	k := 0
 
 	for left <= mid && right <= high {
 		if arr[left] <= arr[right] {
-			temp[low] = arr[left]
+			temp[k] = arr[left]
 			left++
 		} else {
-			temp[low] = arr[right]
+			temp[k] = arr[right]
 			right++
 		}
-		low++
+		k++
 	}
 
 	for left <= mid {
-		temp[low] = arr[left]
+		temp[k] = arr[left]
 		left++
-		low++
+		k++
 	}
 
 	for right <= high {
-		temp[low] = arr[right]
+		temp[k] = arr[right]
 		right++
-		low++
+		k++
 	}
 
-	for i := 0; i < low; i++ {
-		arr[low+i] = temp[i]
+	for i := 0; i < k; i++ {
+		arr[i] = temp[i]
 	}
 }
 
@@ -138,7 +139,7 @@ func qs(arr []int, low int, high int) int {
 
 }
 func main() {
-	arr := []int{1000, 15, 16, 8, 5, 8, 6, 5, 45, 6, 78, 9, 7, 6, 5, 5, 4, 4, 5, 6, 7, 8, 98, 7, 7, 7, 5}
+	arr := []int{20, 10, 100, 100, 10000}
 	// SelectionSort(arr)
 	// BubbleSort(arr)
 	// InsertionSort(arr)
