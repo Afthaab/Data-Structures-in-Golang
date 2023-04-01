@@ -5,26 +5,20 @@ import (
 )
 
 func SelectionSort(arr [6]int) {
-	var temp int
 	for i := 0; i < len(arr)-1; i++ { //T[o(n^2)] s[o(1)]
 		for j := i + 1; j < len(arr); j++ {
 			if arr[i] > arr[j] {
-				temp = arr[i]
-				arr[i] = arr[j]
-				arr[j] = temp
+				arr[i], arr[j] = arr[j], arr[i]
 			}
 		}
 	}
 	fmt.Println(arr)
 }
 func BubbleSort(arr [6]int) {
-	var temp int
 	for i := 0; i < len(arr); i++ { //	T[o(n^2)] S[o(1)]
 		for j := 0; j < len(arr)-1; j++ {
 			if arr[j] > arr[j+1] {
-				temp = arr[j]
 				arr[j] = arr[j+1]
-				arr[j+1] = temp
 			}
 		}
 	}
@@ -78,32 +72,31 @@ func mg(arr []int, low int, mid int, high int) {
 	temp := make([]int, high-low+1)
 	left := low
 	right := mid + 1
-	k := 0
 
 	for left <= mid && right <= high {
 		if arr[left] <= arr[right] {
-			temp[k] = arr[left]
+			temp[low] = arr[left]
 			left++
 		} else {
-			temp[k] = arr[right]
+			temp[low] = arr[right]
 			right++
 		}
-		k++
+		low++
 	}
 
 	for left <= mid {
-		temp[k] = arr[left]
+		temp[low] = arr[left]
 		left++
-		k++
+		low++
 	}
 
 	for right <= high {
-		temp[k] = arr[right]
+		temp[low] = arr[right]
 		right++
-		k++
+		low++
 	}
 
-	for i := 0; i < k; i++ {
+	for i := 0; i < low; i++ {
 		arr[low+i] = temp[i]
 	}
 }
