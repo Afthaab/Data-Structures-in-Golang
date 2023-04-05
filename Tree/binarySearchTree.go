@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	// "math"
+	"math"
 )
 
 type binarytree struct {
@@ -120,6 +120,50 @@ func levelOrder(root *node) {
 		}
 	}
 }
+
+func (b *binarytree) closestvaluefinder(data int) {
+	closestvalue(b.root, data, math.MaxInt32, 0)
+}
+
+func closestvalue(root *node, data int, mindiff int, value int) {
+	if root == nil {
+		fmt.Println("The Closes value is : ", value)
+		return
+	}
+	if root.value < data {
+		currentdiff := data - root.value
+		if currentdiff < mindiff {
+			mindiff = currentdiff
+			value = root.value
+		}
+		closestvalue(root.right, data, mindiff, value)
+	} else {
+		currentdiff := root.value - data
+		if currentdiff < mindiff {
+			mindiff = currentdiff
+			value = root.value
+		}
+		closestvalue(root.left, data, mindiff, value)
+	}
+
+}
+
+func (b *binarytree) max(root *node, value int) {
+	if root == nil {
+		fmt.Println(value)
+		return
+	}
+	b.max(root.right, root.value)
+}
+func (b *binarytree) min(root *node) {
+	var value int
+	for root != nil {
+		value = root.value
+		root = root.left
+	}
+	fmt.Println(value)
+}
+
 func main() {
 	bi := binarytree{}
 	bi.valueinsert(13)
@@ -144,5 +188,5 @@ func main() {
 	// levelOrder(bi.root)
 	// bi.closestvaluefinder(50)
 	// bi.max(bi.root, 0)
-	// bi.min(bi.root)
+	bi.min(bi.root)
 }
