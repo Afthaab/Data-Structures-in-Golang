@@ -22,7 +22,6 @@ func BubbleSort(arr [6]int) {
 			}
 		}
 	}
-	fmt.Println(arr)
 }
 func InsertionSort(arr [1]int) {
 	for i := 1; i < len(arr); i++ { //T[o(n^2)] s[o(1)]
@@ -140,12 +139,12 @@ func qs(arr []int, low int, high int) int {
 }
 func main() {
 	arr := []int{20, 10, 100, 100, 10000}
-	// SelectionSort(arr)
+	SelectionSort(arr)
 	// BubbleSort(arr)
 	// InsertionSort(arr)
 	// mgs(arr, 0, len(arr)-1)
 	// fmt.Println(arr)
-	quickSort(arr, 0, len(arr)-1)
+	// quickSort(arr, 0, len(arr)-1)cd
 	fmt.Println(arr)
 
 }
