@@ -44,24 +44,6 @@ func (b *binarytree) insert(root *node, data int) {
 	}
 }
 
-func (b *binarytree) search(value int) bool {
-	return b.searchHelper(b.root, value)
-}
-
-func (b *binarytree) searchHelper(current *node, data int) bool {
-	if current == nil {
-		return false
-	}
-	if data == current.value {
-		return true
-	}
-	if data < current.value {
-		return b.searchHelper(current.left, data)
-	} else {
-		return b.searchHelper(current.right, data)
-	}
-}
-
 func (b *binarytree) inorderTraversal(root *node) { //acending order left root right
 	if root != nil {
 		b.inorderTraversal(root.left)
@@ -161,9 +143,91 @@ func (b *binarytree) min(root *node) {
 		value = root.value
 		root = root.left
 	}
-	fmt.Println(value)
+	fmt.Println("The minimum Value = ", value)
 }
 
+func searchnode(data int, root *node) (int, *node) {
+	if root == nil {
+		return 0, nil
+	}
+	if root.value == data {
+		return root.value, root
+	}
+	if root.value < data {
+		return searchnode(data, root.right)
+	} else {
+		return searchnode(data, root.left)
+	}
+
+}
+
+func minValue(root *node) *node {
+	if root.left == nil {
+		return root
+	}
+	return minValue(root.left)
+}
+
+func (b *binarytree) deletenode(root *node, target int, parent *node) bool {
+	if root == nil {
+		return false
+	}
+	loop := root
+	found := false
+	for loop != nil {
+		if loop.value == target {
+			found = true
+			break
+		} else if target < loop.value {
+			parent = loop
+			loop = loop.left
+		} else {
+			parent = loop
+			loop = loop.right
+		}
+	}
+	if !found {
+		return false
+	}
+
+	//case 1 for leaf node
+	if loop.left == nil && loop.right == nil {
+		fmt.Println("Deleting leaf node:", loop.value)
+		if parent.left == loop {
+			parent.left = nil
+		} else {
+			parent.right = nil
+		}
+	}
+
+	//case 2 for one child node
+	if loop.left == nil {
+		fmt.Println("Deleting node with one right child:", loop.value)
+		if parent.left == loop {
+			parent.left = loop.right
+		} else {
+			parent.right = loop.right
+		}
+	} else if loop.right == nil {
+		fmt.Println("Deleting node with one left child:", loop.value)
+		if parent.left == loop {
+			parent.left = loop.left
+		} else {
+			parent.right = loop.left
+		}
+	}
+
+	//case 3 with two child nodes
+	if loop.left != nil && loop.right != nil {
+		fmt.Println("Deleting node with two children:", loop.value)
+		min := minValue(loop.right)
+		fmt.Println("Replacing with minimum value in right subtree:", min.value)
+		loop.value = min.value
+		b.deletenode(loop.right, min.value, loop)
+	}
+
+	return true
+}
 func main() {
 	bi := binarytree{}
 	bi.valueinsert(13)
@@ -178,9 +242,10 @@ func main() {
 	bi.valueinsert(24)
 	bi.valueinsert(26)
 	bi.valueinsert(30)
+	bi.valueinsert(25)
+	bi.valueinsert(21)
 	// fmt.Println(bi.count)
 	// fmt.Println(bi)
-	// bi.printTree(bi.root, "", true)
 	// fmt.Println(bi.search(45))
 	// bi.preorderTraversal(bi.root)
 	// bi.inorderTraversal(bi.root)
@@ -188,5 +253,8 @@ func main() {
 	// levelOrder(bi.root)
 	// bi.closestvaluefinder(50)
 	// bi.max(bi.root, 0)
-	bi.min(bi.root)
+	// bi.min(bi.root)
+	bi.printTree(bi.root, "", true)
+	fmt.Println(bi.deletenode(bi.root, 10, nil))
+	bi.printTree(bi.root, "", true)
 }
