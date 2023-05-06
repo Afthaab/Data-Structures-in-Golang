@@ -102,11 +102,9 @@ func levelOrder(root *node) {
 		}
 	}
 }
-
 func (b *binarytree) closestvaluefinder(data int) {
 	closestvalue(b.root, data, math.MaxInt32, 0)
 }
-
 func closestvalue(root *node, data int, mindiff int, value int) {
 	if root == nil {
 		fmt.Println("The Closes value is : ", value)
@@ -129,7 +127,6 @@ func closestvalue(root *node, data int, mindiff int, value int) {
 	}
 
 }
-
 func (b *binarytree) max(root *node, value int) {
 	if root == nil {
 		fmt.Println(value)
@@ -145,7 +142,6 @@ func (b *binarytree) min(root *node) {
 	}
 	fmt.Println("The minimum Value = ", value)
 }
-
 func searchnode(data int, root *node) (int, *node) {
 	if root == nil {
 		return 0, nil
@@ -228,6 +224,17 @@ func (b *binarytree) deletenode(root *node, target int, parent *node) bool {
 
 	return true
 }
+
+func isBinarySearchTree(root *node, min int, max int) bool {
+	if root == nil {
+		return true
+	}
+	if root.value <= min || root.value >= max {
+		return false
+	}
+	return isBinarySearchTree(root.left, min, root.value) && isBinarySearchTree(root.right, root.value, max)
+
+}
 func main() {
 	bi := binarytree{}
 	bi.valueinsert(13)
@@ -243,7 +250,7 @@ func main() {
 	bi.valueinsert(26)
 	bi.valueinsert(30)
 	bi.valueinsert(25)
-	bi.valueinsert(21)
+	// bi.valueinsert(21)
 	// fmt.Println(bi.count)
 	// fmt.Println(bi)
 	// fmt.Println(bi.search(45))
@@ -251,10 +258,15 @@ func main() {
 	// bi.inorderTraversal(bi.root)
 	// bi.postorderTraversal(bi.root)
 	// levelOrder(bi.root)
-	// bi.closestvaluefinder(50)
+	bi.closestvaluefinder(13)
 	// bi.max(bi.root, 0)
 	// bi.min(bi.root)
-	bi.printTree(bi.root, "", true)
-	fmt.Println(bi.deletenode(bi.root, 10, nil))
-	bi.printTree(bi.root, "", true)
+	// bi.printTree(bi.root, "", true)
+	// fmt.Println(bi.deletenode(bi.root, 13, nil))
+	// bi.printTree(bi.root, "", true)
+	// bi.root.value = 3
+	// fmt.Println(bi.root)/
+	// bi.printTree(bi.root, "", true)
+	// fmt.Println(isBinarySearchTree(bi.root, math.MinInt32, math.MaxInt32))
+
 }
